@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 简单的pojo对象-->
+    <bean id="myBean" class="simpleDemo.TestPojo"></bean>
+
+    <!-- 1:JobDetail-->
+    <!-- 1.1:使用MethodInvokingJobDetailFactoryBean  -->
+    <bean id="simpleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 1.1.1):可使用简单的pojo对象作为job-->
+        <property name="targetObject" ref="myBean"/>
+        <!-- 1.1.2):可指定pojo对象的方法作为执行方法-->
+        <property name="targetMethod" value="printMessage"/>
+    </bean>
+
+    <bean name="firstComplexJobDetail"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.defonds.scheduler.jobs.FirstScheduledJob"/>
+        <property name="durability" value="true"/>
+    </bean>
+
+</beans>
